@@ -38,28 +38,28 @@
   (let [url (str endpoint (:ressource params))
         ts (timestamp)
         headers (mk-headers "GET" url "" ts)]
-        (http/get url {:headers headers})))
+        (http/get url {:headers headers :throw-exceptions false})))
 
 (defmethod call "PUT" [params]
   (let [url (str endpoint (:ressource params))
       ts (timestamp)
       body (generate-string (:body params))
       headers (mk-headers "PUT" url body ts)]
-      (http/put url {:body body :headers headers})))
+      (http/put url {:body body :headers headers :throw-exceptions false})))
 
 (defmethod call "POST" [params]
   (let [url (str endpoint (:ressource params))
       ts (timestamp)
       body (generate-string (:body params))
       headers (mk-headers "POST" url body ts)]
-      (http/post url {:body body :headers headers})))
+      (http/post url {:body body :headers headers :throw-exceptions false})))
 
 (defmethod call "DELETE" [params]
- (let [url (str endpoint (:ressource params))
+ (let [url (str endpoint (:ressource params :throw-exceptions false))
     ts (timestamp)
     body (generate-string (:body params))
     headers (mk-headers "DELETE" url body ts)]
-    (http/delete url {:body body :headers headers})))
+    (http/delete url {:body body :headers headers :throw-exceptions false})))
 
 (defmethod call :default [params]
   (log/info "Unsupported method"))

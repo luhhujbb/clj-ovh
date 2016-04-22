@@ -15,4 +15,6 @@
                                   [clj-http "2.1.0"]
                                   [cheshire "5.5.0"]
                                   [digest "1.4.4"]
-                                  [circleci/clj-yaml "0.5.6"]])
+                                  [circleci/clj-yaml "0.5.6"]]
+  :aot :all
+  :pedantic? :warn)

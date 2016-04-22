@@ -1,8 +1,9 @@
-(ns clj-ovh.core
+(ns ovh.core
   (:require [clojure.string :as str]
             [clojure.tools.logging :as log]
             [cheshire.core :refer :all]
-            [clj-http.client :as http]))
+            [clj-http.client :as http]
+            [digest]))
 
 
 (def creds (atom {}))
@@ -13,13 +14,17 @@
   []
   (str (long (/ (System/currentTimeMillis) 1000))))
 
-(def mk-signature
+(defn mk-digest-string
+  [method query body ts]
+  (str (:app-secret @creds) "+" (:consumer-key @creds) "+" method "+" query "+" body "+" ts))
+
+(defn mk-signature
   [method query body ts]
   (let [prefix "$1$"
-        digest-string (str (:app-secret @creds) "+" (:consumer-key @creds) "+" method "+" body "+" ts)]
+        digest-string (mk-digest-string method query body ts)]
     (str prefix (digest/sha-1 digest-string))))
 
-(def mk-headers
+(defn mk-headers
   [method query body ts]
   {"Content-Type" "application/json"
    "X-Ovh-Application" (:app-key @creds)

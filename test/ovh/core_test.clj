@@ -1,6 +1,6 @@
-(ns clj-ovh.core-test
+(ns ovh.core-test
   (:require [clojure.test :refer :all]
-            [clj-ovh.core :refer :all]))
+            [ovh.core :refer :all]))
 
 (deftest a-test
   (testing "FIXME, I fail."

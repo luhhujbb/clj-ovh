@@ -7,6 +7,11 @@
 
 
 (def creds (atom {}))
+(def initialized (atom false))
+
+(defn initialized?
+  []
+  @initialized)
 
 (def endpoint "https://api.ovh.com/1.0")
 
@@ -62,10 +67,11 @@
     (http/delete url {:body body :headers headers :throw-exceptions false})))
 
 (defmethod call :default [params]
-  (log/info "Unsupported method"))
+  (log/info "Unsupported http verb"))
 
 (defn init!
   [app-key app-secret consumer-key]
   (swap! creds assoc :app-key app-key
                      :app-secret app-secret
-                     :consumer-key consumer-key))
+                     :consumer-key consumer-key)
+  (reset! initialized true))

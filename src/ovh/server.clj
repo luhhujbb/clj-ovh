@@ -34,10 +34,7 @@
   [server-name]
   (if (ovh/initialized?)
     (ovh/call {:method "GET"
-               :ressource (str api-path "/" server-name "/install/status")
-               :body {:partitionSchemeName partitionSchemeName
-                      :templateName templateName
-                      :details details}})
+               :ressource (str api-path "/" server-name "/install/status")})
     {:status 403}))
 
 (defn reboot

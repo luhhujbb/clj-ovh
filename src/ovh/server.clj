@@ -20,6 +20,20 @@
                :ressource (str api-path "/" server-name)})
     {:status 403}))
 
+(defn list-templates
+  [server-name]
+  (if (ovh/initialized?)
+    (ovh/call {:method "GET"
+               :ressource (str api-path "/" server-name "/install/compatibleTemplates")})
+    {:status 403}))
+
+(defn list-partition-schemes
+  [server-name]
+  (if (ovh/initialized?)
+    (ovh/call {:method "GET"
+               :ressource (str api-path "/" server-name "/install/compatibleTemplatePartitionSchemes")})
+    {:status 403}))
+
 (defn install
   [server-name partitionSchemeName templateName details]
   (if (ovh/initialized?)

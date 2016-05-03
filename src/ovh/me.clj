@@ -38,3 +38,20 @@
     (ovh/call {:method "DELETE"
                :ressource (str api-path "/sshKey/" key-name)})
     {:status 403}))
+
+;;########################
+;;Partition schemes
+;;########################
+(defn list-installation-templates
+  []
+  (if (ovh/initialized?)
+    (ovh/call {:method "GET"
+               :ressource (str api-path "/installationTemplate")})
+    {:status 403}))
+
+(defn get-template-partition-schemes
+  [template-name]
+  (if (ovh/initialized?)
+    (ovh/call {:method "GET"
+               :ressource (str api-path "/installationTemplate/" template-name "/partitionScheme")})
+    {:status 403}))

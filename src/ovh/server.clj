@@ -46,6 +46,14 @@
                :ressource (str api-path "/" server-name "/install/compatibleTemplatePartitionSchemes")})
     {:status 403}) 200 []))
 
+(defn hardware-raid-profile
+  [server-name]
+  (ovh/validate
+  (if (ovh/initialized?)
+    (ovh/call {:method "GET"
+               :ressource (str api-path "/" server-name "/install/hardwareRaidProfile")})
+    {:status 403}) 200))
+
 (defn install
   [server-name partitionSchemeName templateName details]
   (if (ovh/initialized?)

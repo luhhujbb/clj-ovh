@@ -8,31 +8,43 @@
 
 (defn list-servers
   []
-  (if (ovh/initialized?)
-    (ovh/call {:method "GET"
+  (ovh/validate
+    (if (ovh/initialized?)
+      (ovh/call {:method "GET"
                :ressource api-path})
-    {:status 403}))
+      {:status 403}) 200 []))
 
 (defn describe
   [server-name]
+  (ovh/validate
   (if (ovh/initialized?)
     (ovh/call {:method "GET"
                :ressource (str api-path "/" server-name)})
-    {:status 403}))
+    {:status 403}) 200))
+
+(defn vrack
+  [server-name]
+  (ovh/validate
+    (if (ovh/initialized?)
+      (ovh/call {:method "GET"
+               :ressource (str api-path "/" server-name "/vrack")})
+      {:status 403})  200 []))
 
 (defn list-templates
   [server-name]
+  (ovh/validate
   (if (ovh/initialized?)
     (ovh/call {:method "GET"
                :ressource (str api-path "/" server-name "/install/compatibleTemplates")})
-    {:status 403}))
+    {:status 403}) 200))
 
 (defn list-partition-schemes
   [server-name]
+  (ovh/validate
   (if (ovh/initialized?)
     (ovh/call {:method "GET"
                :ressource (str api-path "/" server-name "/install/compatibleTemplatePartitionSchemes")})
-    {:status 403}))
+    {:status 403}) 200 []))
 
 (defn install
   [server-name partitionSchemeName templateName details]
@@ -46,10 +58,11 @@
 
 (defn install-status
   [server-name]
+  (ovh/validate
   (if (ovh/initialized?)
     (ovh/call {:method "GET"
                :ressource (str api-path "/" server-name "/install/status")})
-    {:status 403}))
+    {:status 403}) 200))
 
 (defn reboot
   [server-name]

@@ -11,10 +11,11 @@
 ;;#####################
 (defn list-ssh-keys
   []
+  (ovh/validate
   (if (ovh/initialized?)
     (ovh/call {:method "GET"
                :ressource (str api-path "/sshKey")})
-    {:status 403}))
+    {:status 403}) 200 []))
 
 (defn add-ssh-key
   [key-name pub-key]
@@ -27,10 +28,11 @@
 
 (defn get-ssh-key
   [key-name]
+  (ovh/validate
   (if (ovh/initialized?)
     (ovh/call {:method "GET"
                :ressource (str api-path "/sshKey/" key-name)})
-    {:status 403}))
+    {:status 403}) 200))
 
 (defn del-ssh-key
   [key-name]
@@ -44,14 +46,16 @@
 ;;########################
 (defn list-installation-templates
   []
+  (ovh/validate
   (if (ovh/initialized?)
     (ovh/call {:method "GET"
                :ressource (str api-path "/installationTemplate")})
-    {:status 403}))
+    {:status 403}) 200 []))
 
 (defn get-template-partition-schemes
   [template-name]
+  (ovh/validate
   (if (ovh/initialized?)
     (ovh/call {:method "GET"
                :ressource (str api-path "/installationTemplate/" template-name "/partitionScheme")})
-    {:status 403}))
+    {:status 403}) 200 []))

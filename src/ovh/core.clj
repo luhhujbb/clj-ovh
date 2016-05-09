@@ -15,6 +15,14 @@
 
 (def endpoint "https://api.ovh.com/1.0")
 
+(defn validate
+  ([res code]
+    (validate res code nil))
+  ([res code fallback-value]
+  (if (= code (:status res))
+    (:body res)
+    fallback-value)))
+
 (defn timestamp
   []
   (str (long (/ (System/currentTimeMillis) 1000))))

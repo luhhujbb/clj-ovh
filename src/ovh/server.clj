@@ -54,6 +54,30 @@
                :ressource (str api-path "/" server-name "/install/hardwareRaidProfile")})
     {:status 403}) 200))
 
+(defn ip-specifications
+  [server-name]
+  (ovh/validate
+  (if (ovh/initialized?)
+    (ovh/call {:method "GET"
+               :ressource (str api-path "/" server-name "/specifications/ip")})
+    {:status 403}) 200))
+
+(defn hardware-specifications
+  [server-name]
+  (ovh/validate
+  (if (ovh/initialized?)
+    (ovh/call {:method "GET"
+               :ressource (str api-path "/" server-name "/specifications/hardware")})
+    {:status 403}) 200))
+
+(defn network-specifications
+  [server-name]
+  (ovh/validate
+  (if (ovh/initialized?)
+    (ovh/call {:method "GET"
+               :ressource (str api-path "/" server-name "/specifications/network")})
+    {:status 403}) 200))
+
 (defn install
   [server-name partitionSchemeName templateName details]
   (if (ovh/initialized?)

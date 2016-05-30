@@ -15,13 +15,20 @@
 
 (def endpoint "https://api.ovh.com/1.0")
 
+(def request-conf {:accept :json
+                   :as :json
+                   :throw-exceptions false})
+
+
 (defn validate
   ([res code]
     (validate res code nil))
   ([res code fallback-value]
   (if (= code (:status res))
     (:body res)
-    fallback-value)))
+    (do
+      (log/info res)
+      fallback-value))))
 
 (defn timestamp
   []
@@ -50,29 +57,33 @@
 (defmethod call "GET" [params]
   (let [url (str endpoint (:ressource params))
         ts (timestamp)
-        headers (mk-headers "GET" url "" ts)]
-        (http/get url {:headers headers :throw-exceptions false})))
+        headers (mk-headers "GET" url "" ts)
+        opts (merge {:headers headers} request-conf)]
+        (http/get url opts)))
 
 (defmethod call "PUT" [params]
   (let [url (str endpoint (:ressource params))
       ts (timestamp)
       body (generate-string (:body params))
-      headers (mk-headers "PUT" url body ts)]
-      (http/put url {:body body :headers headers :throw-exceptions false})))
+      headers (mk-headers "PUT" url body ts)
+      opts (merge {:body body :headers headers} request-conf)]
+      (http/put url opts)))
 
 (defmethod call "POST" [params]
   (let [url (str endpoint (:ressource params))
       ts (timestamp)
       body (generate-string (:body params))
-      headers (mk-headers "POST" url body ts)]
-      (http/post url {:body body :headers headers :throw-exceptions false})))
+      headers (mk-headers "POST" url body ts)
+      opts (merge {:body body :headers headers} request-conf)]
+      (http/post url opts)))
 
 (defmethod call "DELETE" [params]
- (let [url (str endpoint (:ressource params :throw-exceptions false))
+ (let [url (str endpoint (:ressource params))
     ts (timestamp)
     body (generate-string (:body params))
-    headers (mk-headers "DELETE" url body ts)]
-    (http/delete url {:body body :headers headers :throw-exceptions false})))
+    headers (mk-headers "DELETE" url body ts)
+    opts (merge {:body body :headers headers} request-conf)]
+    (http/delete url opts)))
 
 (defmethod call :default [params]
   (log/info "Unsupported http verb"))

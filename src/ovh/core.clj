@@ -26,9 +26,7 @@
   ([res code fallback-value]
   (if (= code (:status res))
     (:body res)
-    (do
-      (log/info res)
-      fallback-value))))
+    fallback-value)))
 
 (defn timestamp
   []

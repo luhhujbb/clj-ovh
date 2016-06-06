@@ -19,7 +19,6 @@
                    :as :json
                    :throw-exceptions false})
 
-
 (defn validate
   ([res code]
     (validate res code nil))
@@ -57,7 +56,11 @@
         ts (timestamp)
         headers (mk-headers "GET" url "" ts)
         opts (merge {:headers headers} request-conf)]
-        (http/get url opts)))
+        (try
+          (http/get url opts)
+          (catch Exception e
+            (log/error "Ressource : "url "- Error :" e)
+            {:status 500}))))
 
 (defmethod call "PUT" [params]
   (let [url (str endpoint (:ressource params))
@@ -65,7 +68,11 @@
       body (generate-string (:body params))
       headers (mk-headers "PUT" url body ts)
       opts (merge {:body body :headers headers} request-conf)]
-      (http/put url opts)))
+      (try
+        (http/put url opts)
+        (catch Exception e
+          (log/error "Ressource : "url "- Error :" e)
+          {:status 500}))))
 
 (defmethod call "POST" [params]
   (let [url (str endpoint (:ressource params))
@@ -73,7 +80,11 @@
       body (generate-string (:body params))
       headers (mk-headers "POST" url body ts)
       opts (merge {:body body :headers headers} request-conf)]
-      (http/post url opts)))
+      (try
+        (http/post url opts)
+        (catch Exception e
+          (log/error "Ressource : "url "- Error :" e)
+          {:status 500}))))
 
 (defmethod call "DELETE" [params]
  (let [url (str endpoint (:ressource params))
@@ -81,7 +92,11 @@
     body (generate-string (:body params))
     headers (mk-headers "DELETE" url body ts)
     opts (merge {:body body :headers headers} request-conf)]
-    (http/delete url opts)))
+    (try
+      (http/delete url opts)
+      (catch Exception e
+        (log/error "Ressource : "url "- Error :" e)
+        {:status 500}))))
 
 (defmethod call :default [params]
   (log/info "Unsupported http verb"))

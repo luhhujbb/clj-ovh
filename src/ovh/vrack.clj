@@ -35,8 +35,7 @@
   (if (ovh/initialized?)
     (ovh/call {:method "POST"
                :ressource (str api-path "/" vrack-name "/dedicatedServer")
-               :body {:serviceName vrack-name
-                      :dedicatedServer server-name}})
+               :body {:dedicatedServer server-name}})
     {:status 403}))
 
 (defn delete-server

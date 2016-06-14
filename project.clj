@@ -1,4 +1,4 @@
-(defproject clj-ovh "0.1.2"
+(defproject clj-ovh "0.1.3"
   :description "clojure OVH Client"
   :url "http://example.com/FIXME"
   :license {:name "Eclipse Public License"

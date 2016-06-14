@@ -12,7 +12,7 @@
     (if (ovh/initialized?)
       (ovh/call {:method "GET"
                :ressource api-path})
-      {:status 403}) 200 []))
+      {:status 403}) 200 nil))
 
 (defn describe
   [server-name]

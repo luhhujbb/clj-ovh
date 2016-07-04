@@ -30,7 +30,7 @@
   [ip-pool ip reverse]
   (if (ovh/initialized?)
     (ovh/call {:method "POST"
-               :ressource (str api-path "/" (util/url-encode ip) "/reverse")
+               :ressource (str api-path "/" (util/url-encode ip-pool) "/reverse")
                :body {:ipReverse ip
                       :reverse reverse}})
     {:status 403}))

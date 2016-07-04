@@ -1,3 +1,3 @@
 # Introduction to clj-ovh
 
-TODO: write [great documentation](http://jacobian.org/writing/what-to-write/)
+Read the code, everything is pretty straightforward

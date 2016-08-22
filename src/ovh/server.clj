@@ -78,6 +78,14 @@
                :ressource (str api-path "/" server-name "/specifications/network")})
     {:status 403}) 200))
 
+(defn service-infos
+  [server-name]
+  (ovh/validate
+  (if (ovh/initialized?)
+    (ovh/call {:method "GET"
+               :ressource (str api-path "/" server-name "/serviceInfos")})
+    {:status 403}) 200))
+
 (defn install
   [server-name partitionSchemeName templateName details]
   (if (ovh/initialized?)

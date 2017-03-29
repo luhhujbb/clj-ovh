@@ -49,10 +49,30 @@
    "X-Ovh-Signature" (mk-signature method query body ts)
    "X-Ovh-Consumer" (:consumer-key @creds)})
 
+(defn call-with-body
+  "Generic method for http verb with body"
+  [params]
+  (if (initialized?)
+    (let [url (str endpoint (:ressource params))
+      ts (timestamp)
+      body (generate-string (:body params))
+      headers (mk-headers (:method params) url body ts)
+      opts (merge {:body body :headers headers} request-conf)]
+      (try
+        (condp = (:method params)
+          "POST" (http/post url opts)
+          "PUT"  (http/put url opts)
+          "DELETE" (http/delete url opts))
+       (catch Exception e
+         (log/error "Ressource : "url "- Error :" e)
+         {:status 500})))
+   {:status 403}))
+
 (defmulti call (fn [params] (:method params)))
 
 (defmethod call "GET" [params]
-  (let [url (str endpoint (:ressource params))
+  (if (initialized?)
+    (let [url (str endpoint (:ressource params))
         ts (timestamp)
         headers (mk-headers "GET" url "" ts)
         opts (merge {:headers headers} request-conf)]
@@ -60,43 +80,17 @@
           (http/get url opts)
           (catch Exception e
             (log/error "Ressource : "url "- Error :" e)
-            {:status 500}))))
+            {:status 500})))
+    {:status 403}))
 
 (defmethod call "PUT" [params]
-  (let [url (str endpoint (:ressource params))
-      ts (timestamp)
-      body (generate-string (:body params))
-      headers (mk-headers "PUT" url body ts)
-      opts (merge {:body body :headers headers} request-conf)]
-      (try
-        (http/put url opts)
-        (catch Exception e
-          (log/error "Ressource : "url "- Error :" e)
-          {:status 500}))))
+  (call-with-body params))
 
 (defmethod call "POST" [params]
-  (let [url (str endpoint (:ressource params))
-      ts (timestamp)
-      body (generate-string (:body params))
-      headers (mk-headers "POST" url body ts)
-      opts (merge {:body body :headers headers} request-conf)]
-      (try
-        (http/post url opts)
-        (catch Exception e
-          (log/error "Ressource : "url "- Error :" e)
-          {:status 500}))))
+  (call-with-body params))
 
 (defmethod call "DELETE" [params]
- (let [url (str endpoint (:ressource params))
-    ts (timestamp)
-    body (generate-string (:body params))
-    headers (mk-headers "DELETE" url body ts)
-    opts (merge {:body body :headers headers} request-conf)]
-    (try
-      (http/delete url opts)
-      (catch Exception e
-        (log/error "Ressource : "url "- Error :" e)
-        {:status 500}))))
+  (call-with-body params))
 
 (defmethod call :default [params]
   (log/info "Unsupported http verb"))

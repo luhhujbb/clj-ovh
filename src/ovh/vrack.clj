@@ -9,39 +9,32 @@
 (defn list-vracks
   []
   (ovh/validate
-  (if (ovh/initialized?)
     (ovh/call {:method "GET"
                :ressource api-path})
-    {:status 403}) 200))
+    200))
 
 (defn describe
   [vrack-name]
   (ovh/validate
-  (if (ovh/initialized?)
     (ovh/call {:method "GET"
                :ressource (str api-path "/" vrack-name)})
-    {:status 403}) 200))
+    200))
 
 (defn list-servers
   [vrack-name]
   (ovh/validate
-  (if (ovh/initialized?)
     (ovh/call {:method "GET"
                :ressource (str api-path "/" vrack-name "/dedicatedServer")})
-    {:status 403}) 200))
+    200))
 
 (defn add-server
   [vrack-name server-name]
-  (if (ovh/initialized?)
     (ovh/call {:method "POST"
                :ressource (str api-path "/" vrack-name "/dedicatedServer")
-               :body {:dedicatedServer server-name}})
-    {:status 403}))
+               :body {:dedicatedServer server-name}}))
 
 (defn delete-server
   [vrack-name server-name]
-    (if (ovh/initialized?)
     (ovh/call {:method "DELETE"
                :ressource (str api-path "/" vrack-name "/dedicatedServer/" server-name)
-               :body {}})
-    {:status 403}))
+               :body {}}))

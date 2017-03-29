@@ -11,26 +11,21 @@
   "Return Ip of current account"
   []
   (ovh/validate
-    (if (ovh/initialized?)
-      (ovh/call {:method "GET"
-                 :ressource (str api-path)})
-      {:status 403}) 200))
+    (ovh/call {:method "GET"
+               :ressource (str api-path)}) 200))
 
 (defn get-ip-details
   "Return details of asked ip"
   [ip]
   (ovh/validate
-    (if (ovh/initialized?)
       (ovh/call {:method "GET"
                  :ressource (str api-path "/" (util/url-encode ip))})
-      {:status 403}) 200))
+      200))
 
 (defn set-ip-reverse
   "Set the reverse for one ip in the pool"
   [ip-pool ip reverse]
-  (if (ovh/initialized?)
-    (ovh/call {:method "POST"
+  (ovh/call {:method "POST"
                :ressource (str api-path "/" (util/url-encode ip-pool) "/reverse")
                :body {:ipReverse ip
-                      :reverse reverse}})
-    {:status 403}))
+                      :reverse reverse}}))

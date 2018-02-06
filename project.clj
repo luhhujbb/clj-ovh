@@ -1,6 +1,6 @@
-(defproject luhhujbb/clj-ovh "0.1.9"
+(defproject luhhujbb/clj-ovh "0.1.10"
   :description "clojure OVH Client"
-  :url "http://example.com/FIXME"
+  :url "https://github.com/luhhujbb/clj-ovh"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure "1.7.0"]

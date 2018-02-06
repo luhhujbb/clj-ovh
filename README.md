@@ -1,3 +1,5 @@
+[![Clojars Project](https://img.shields.io/clojars/v/luhhujbb/clj-ovh.svg)](https://clojars.org/luhhujbb/clj-ovh)
+
 # clj-ovh
 
 A Clojure library designed to interact with ovh API.

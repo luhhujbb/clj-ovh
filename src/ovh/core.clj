@@ -81,7 +81,6 @@
                   (assoc opts :query-params (:query-params params))
                    opts)]
         (try
-          (log/info opts)
           (http/get url opts)
           (catch Exception e
             (log/error "Ressource : "url "- Error :" e)

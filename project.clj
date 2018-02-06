@@ -1,4 +1,4 @@
-(defproject luhhujbb/clj-ovh "0.1.8"
+(defproject luhhujbb/clj-ovh "0.1.9"
   :description "clojure OVH Client"
   :url "http://example.com/FIXME"
   :license {:name "Eclipse Public License"
@@ -12,8 +12,8 @@
                                   [log4j "1.2.17"]
                                   [clj-time "0.11.0"]
                                   ;;for dd
-                                  [clj-http "2.1.0"]
-                                  [cheshire "5.5.0"]
+                                  [clj-http "3.7.0"]
+                                  [cheshire "5.8.0"]
                                   [digest "1.4.4"]]
   :aot :all
   :pedantic? :warn)

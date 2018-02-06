@@ -12,20 +12,20 @@
   []
   (ovh/validate
     (ovh/call {:method "GET"
-               :ressource (str api-path)}) 200))
+               :resource (str api-path)}) 200))
 
 (defn get-ip-details
   "Return details of asked ip"
   [ip]
   (ovh/validate
       (ovh/call {:method "GET"
-                 :ressource (str api-path "/" (util/url-encode ip))})
+                 :resource (str api-path "/" (util/url-encode ip))})
       200))
 
 (defn set-ip-reverse
   "Set the reverse for one ip in the pool"
   [ip-pool ip reverse]
   (ovh/call {:method "POST"
-               :ressource (str api-path "/" (util/url-encode ip-pool) "/reverse")
+               :resource (str api-path "/" (util/url-encode ip-pool) "/reverse")
                :body {:ipReverse ip
                       :reverse reverse}}))

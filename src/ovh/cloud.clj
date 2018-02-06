@@ -7,32 +7,41 @@
 
 (def api-path "/cloud")
 
+(defn list-projects
+  []
+  (ovh/validate
+    (ovh/call {:method "GET"
+               :resource (str api-path "/project")}) 200))
+
 (defn describe-project
   [project]
   (ovh/validate
     (ovh/call {:method "GET"
-               :ressource (str api-path "/project/" project)}) 200))
+               :resource (str api-path "/project/" project)}) 200))
 
 (defn describe-instances
-  "Return details of asked ip"
+  "Describe list of instances"
   [project & [region]]
+  (let [resource {:method "GET"
+                  :resource (str api-path "/project/" project "/instance")}
+        resource (if region (assoc resource :query-params {:region region})
+                    resource)]
   (ovh/validate
-      (ovh/call {:method "GET"
-                 :ressource (str api-path "/project/" project "/instance")})
-      200))
+      (ovh/call resource)
+      200)))
 
 (defn describe-private-networks
-  "Return details of asked ip"
+  "Describe list of private network"
   [project]
   (ovh/validate
       (ovh/call {:method "GET"
-                 :ressource (str api-path "/project/" project "/network/private")})
+                 :resource (str api-path "/project/" project "/network/private")})
       200))
 
 (defn describe-private-network-subnets
-  "Return details of asked ip"
+  "DEscribe private subnet of a private network"
   [project private-network]
   (ovh/validate
       (ovh/call {:method "GET"
-                 :ressource (str api-path "/project/" project "/network/private/" private-network "/subnet")})
+                 :resource (str api-path "/project/" project "/network/private/" private-network "/subnet")})
       200))

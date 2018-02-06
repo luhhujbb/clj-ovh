@@ -13,13 +13,13 @@
   []
   (ovh/validate
     (ovh/call {:method "GET"
-               :ressource (str api-path "/sshKey")})
+               :resource (str api-path "/sshKey")})
     200 []))
 
 (defn add-ssh-key
   [key-name pub-key]
     (ovh/call {:method "POST"
-               :ressource (str api-path "/sshKey")
+               :resource (str api-path "/sshKey")
                :body {:key pub-key
                       :keyName key-name}}))
 
@@ -27,13 +27,13 @@
   [key-name]
   (ovh/validate
     (ovh/call {:method "GET"
-               :ressource (str api-path "/sshKey/" key-name)})
+               :resource (str api-path "/sshKey/" key-name)})
     200))
 
 (defn del-ssh-key
   [key-name]
     (ovh/call {:method "DELETE"
-               :ressource (str api-path "/sshKey/" key-name)}))
+               :resource (str api-path "/sshKey/" key-name)}))
 
 ;;########################
 ;;Partition schemes
@@ -42,12 +42,12 @@
   []
   (ovh/validate
     (ovh/call {:method "GET"
-               :ressource (str api-path "/installationTemplate")})
+               :resource (str api-path "/installationTemplate")})
     200 []))
 
 (defn get-template-partition-schemes
   [template-name]
   (ovh/validate
     (ovh/call {:method "GET"
-               :ressource (str api-path "/installationTemplate/" template-name "/partitionScheme")})
+               :resource (str api-path "/installationTemplate/" template-name "/partitionScheme")})
     200 []))

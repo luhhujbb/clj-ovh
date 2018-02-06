@@ -53,7 +53,7 @@
   "Generic method for http verb with body"
   [params]
   (if (initialized?)
-    (let [url (str endpoint (:ressource params))
+    (let [url (str endpoint (:resource params))
       ts (timestamp)
       body (generate-string (:body params))
       headers (mk-headers (:method params) url body ts)
@@ -72,11 +72,16 @@
 
 (defmethod call "GET" [params]
   (if (initialized?)
-    (let [url (str endpoint (:ressource params))
-        ts (timestamp)
-        headers (mk-headers "GET" url "" ts)
-        opts (merge {:headers headers} request-conf)]
+    (let [url (str endpoint (:resource params))
+          ts (timestamp)
+          to-be-hashed-url (if (:query-params params) (str url "?" (http/generate-query-string (:query-params params))) url)
+          headers (mk-headers "GET" to-be-hashed-url "" ts)
+          opts (merge {:headers headers} request-conf)
+          opts (if (:query-params params)
+                  (assoc opts :query-params (:query-params params))
+                   opts)]
         (try
+          (log/info opts)
           (http/get url opts)
           (catch Exception e
             (log/error "Ressource : "url "- Error :" e)

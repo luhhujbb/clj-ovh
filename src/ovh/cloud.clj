@@ -30,6 +30,12 @@
       (ovh/call resource)
       200)))
 
+(defn reboot-instance
+  [project instance-id & [type]]
+  (ovh/call {:method "POST"
+             :resource (str api-path "/project/" project "/instance/" instance-id "/reboot")
+             :body (if (#{"soft" "hard"} type) {:type type} {})}))
+
 (defn describe-private-networks
   "Describe list of private network"
   [project]

@@ -19,6 +19,18 @@
     (ovh/call {:method "GET"
                :resource (str api-path "/project/" project)}) 200))
 
+(defn list-regions
+    [project]
+    (ovh/validate
+        (ovh/call {:method "GET"
+                   :resource (str api-path "/project/" project "/region")}) 200))
+
+(defn region-state
+    [project region]
+    (ovh/validate
+        (ovh/call {:method "GET"
+                   :resource (str api-path "/project/" project "/region/" region)}) 200))
+
 (defn describe-instances
   "Describe list of instances"
   [project & [region]]

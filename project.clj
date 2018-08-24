@@ -1,4 +1,4 @@
-(defproject luhhujbb/clj-ovh "0.1.11"
+(defproject luhhujbb/clj-ovh "0.1.12"
   :description "clojure OVH Client"
   :url "https://github.com/luhhujbb/clj-ovh"
   :license {:name "Eclipse Public License"

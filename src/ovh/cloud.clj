@@ -42,6 +42,24 @@
       (ovh/call resource)
       200)))
 
+ (defn describe-instance
+    "Describe instance"
+    [project instance]
+    (let [resource {:method "GET"
+                    :resource (str api-path "/project/" project "/instance/" instance)}]
+    (ovh/validate
+        (ovh/call resource)
+        200)))
+
+(defn rename-instance
+    [project instance name]
+    (let [resource {:method "PUT"
+                    :resource (str api-path "/project/" project "/instance/" instance)
+                    :body {:instanceName name}}]
+        (ovh/validate
+            (ovh/call resource)
+            202)))
+
 (defn reboot-instance
   [project instance-id & [type]]
   (ovh/call {:method "POST"
